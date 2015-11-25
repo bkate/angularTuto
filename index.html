@@ -2,16 +2,54 @@
 <html ng-app="gemStore">
 <head>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="styles/home.css">
   <script src="/bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="scripts/app.js"></script>
 </head>
 <body class="container" ng-controller="StoreController as store">
+
+<nav class="navbar navbar-inverse">
+  <div id="container" class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Big Home</a>
+    </div>
+    <div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a>About</a></li>
+      <li><a>Element</a></li>
+      <li><a>Download</a></li>
+    </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+
+      </ul>
+  </div>
+    </div>
+
+</nav>
+
 <div class="product row" ng-repeat="product in store.products">
   <h1>{{product.name}}</h1>
-  <h2>{{product.price}}</h2>
-  <button ng-show="product.canPurchase">Purchase</button>
-
-  <button>Add to Cart</button>
+  <em class="pull-right">{{product.price | currency }}</em>
+  <img ng-src="{{product.image.full}}">
+  <button id="btn2" class="btn" ng-show="product.canPurchase">Purchase</button>
+  <button class="btn" id="btn1">Add to Cart</button>
 </div>
+
+<section ng-init="tab = 1">
+  <ul class="nav nav-pills">
+    <li ng-class="{active:tab===1}">
+      <a href ng-click="tab = 1"> Description</a>
+    </li>
+    <li ng-class="{active:tab === 2}">
+      <a href ng-click="tab = 2">Info</a>
+    </li>
+    <li  ng-class="{active: tab === 3}">
+      <a href ng-click="tab = 3">Buy it</a>
+    </li>
+  </ul>
+</section>
 </body>
 </html>
