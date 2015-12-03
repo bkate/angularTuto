@@ -6,50 +6,165 @@
   <script src="/bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="scripts/app.js"></script>
 </head>
+
+<!--the store controller-->
+
 <body class="container" ng-controller="StoreController as store">
 
+<!--navbar on the top-->
 <nav class="navbar navbar-inverse">
   <div id="container" class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Big Home</a>
     </div>
     <div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a>About</a></li>
-      <li><a>Element</a></li>
-      <li><a>Download</a></li>
-    </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
-
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a>About</a></li>
+        <li><a>Element</a></li>
+        <li><a>Download</a></li>
       </ul>
-  </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+        </ul>
+      </div>
     </div>
-
 </nav>
 
+<!--product row-->
 <div class="product row" ng-repeat="product in store.products">
   <h1>{{product.name}}</h1>
   <em class="pull-right">{{product.price | currency }}</em>
   <img ng-src="{{product.image.full}}">
   <button id="btn2" class="btn" ng-show="product.canPurchase">Purchase</button>
   <button class="btn" id="btn1">Add to Cart</button>
+
+
+  <section ng-init="tab = 1">
+    <ul class="nav nav-pills">
+      <li ng-class="{active:tab===1}">
+        <a href ng-click="tab = 1">Description</a>
+      </li>
+      <li ng-class="{active:tab === 2}">
+        <a href ng-click="tab = 2">Info</a>
+      </li>
+      <li  ng-class="{active: tab === 3}">
+        <a href ng-click="tab = 3">Reviews</a>
+      </li>
+    </ul>
+  </section>
+  <div>
+    <div class="panel" ng-show="tab === 1">
+      <h4>Description</h4>
+      <blockquote>{{product.description}}</blockquote>
+    </div>
+    <div class="panel" ng-show="tab === 2">
+      <h4>Info</h4>
+      <blockquote>None yet</blockquote>
+    </div>
+    <div class="panel" ng-show="tab === 3">
+      <h4>Reviews</h4>
+      <blockquote ng-repeat="review in product.reviews">
+        <b>{{review.author}}
+        : {{review.stars}} stars
+        </b>
+        <p>{{review.body}}</p>
+      </blockquote>
+    </div>
+  </div>
 </div>
 
-<section ng-init="tab = 1">
-  <ul class="nav nav-pills">
-    <li ng-class="{active:tab===1}">
-      <a href ng-click="tab = 1"> Description</a>
-    </li>
-    <li ng-class="{active:tab === 2}">
-      <a href ng-click="tab = 2">Info</a>
-    </li>
-    <li  ng-class="{active: tab === 3}">
-      <a href ng-click="tab = 3">Buy it</a>
-    </li>
-  </ul>
-</section>
+<!--form-->
+<div class="container">
+  <div class="row">
+    <form name="reviewForm">
+      <div class="col-lg-6">
+        <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Restricted Field</strong></div>
+
+        <div class="form-group">
+          <label for="InputName">Enter Name</label>
+          <div class="input-group">
+            <input type="text" class="form-control" name="InputName" id="InputName" placeHolder="Enter Name" required>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="InputEmail">Enter Email</label>
+          <div class="input-group">
+            <input type="text" class="form-control" name="InputEmail" id="InputEmail" placeholder="Enter Email" required>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="InputMessage">Enter your message</label>
+          <div class="input-group">
+            <textarea name="InputMessage" id="InputMessage" class="form-control" placeholder="Enter your message here" rows="5" required></textarea>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="col-lg-5 col-md-push-1">
+      <div class="col-md-12">
+        <div class="alert alert-success">
+          <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
+        </div>
+        <div class="alert alert-danger">
+          <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--progress bar -->
+<div class="container" ng-controller="ProgressbarController as progBar">
+  <div class="row"><br />
+    <div class="col-md-12">
+      <div class="prg">
+        <div class="prg success-color" style="width: 56%;" >
+          <div class="success-label">{{progBar.progValue}}%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"><br />
+    <div class="col-md-12">
+      <div class="prg">
+        <div class="prg success-color" style="width: 100%;">
+          <div class="success-label">100%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"><br />
+    <div class="col-md-12">
+      <div class="prg">
+        <div class="prg danger-color" style="width: 100%;">
+          <div class="danger-label">100%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"><br />
+    <div class="col-md-12">
+      <div class="prg">
+        <div class="prg warning-color" style="width: 30%;">
+          <div class="warning-label">30%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
