@@ -46,7 +46,6 @@
                     body: "no no una producto me gusta di tutti",
                     author: "jdf@lal.nim"
                 }
-
             ]
         }
     ];
@@ -54,15 +53,22 @@
 
     var app = angular.module("gemStore", []);
 
+
     app.controller("StoreController", function(){  // the controller is attached to (inside) our app.
         this.products = gems;
     });
 
     app.controller("ProgressbarController", function(){
         this.progValue = 56;
+    });
 
-    })
-
+    app.controller('ReviewController', function(){
+       this.review = {};
+        this.addReview = function(product){
+            product.reviews.push(this.review);
+            this.review = {};
+        };
+    });
 
 })();
 
